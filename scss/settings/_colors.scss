@@ -1,0 +1,11 @@
+// Design tokens (Sass variables). Compiled into CSS custom properties in
+// main.scss, so the palette stays inspectable/swappable at runtime too.
+$bg: #0b0e1a;
+$bg-panel: #12162a;
+$bg-panel-2: #171c33;
+$border: #262c4a;
+$text: #eef0fb;
+$text-dim: #9aa0c3;
+$accent: #f4ecd8;
+$accent-strong: #e8c766;
+$today-ring: #6ea8fe;

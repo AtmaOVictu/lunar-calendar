@@ -1,8 +1,14 @@
+@charset "UTF-8";
 /* ---------------------------------------------------------------------
-   Lunar Calendar — styles.css
-   Plain modern CSS: custom properties, Grid, clamp()-based fluid type,
-   mobile-first responsive breakpoints (Advanced HTML/CSS + RWD module).
+   Lunar Calendar — compiled from scss/main.scss, do not edit directly.
+   Edit the .scss source and recompile — see README.md "Sass" section.
 --------------------------------------------------------------------- */
+.detail-panel, .calendar-wrap {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
 
 :root {
   --bg: #0b0e1a;
@@ -20,16 +26,18 @@
   --gap: clamp(0.5rem, 1.5vw, 1rem);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { color-scheme: dark; }
+html {
+  color-scheme: dark;
+}
 
 body {
   margin: 0;
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
-  background:
-    radial-gradient(ellipse at top, #171d3a 0%, var(--bg) 55%),
-    var(--bg);
+  background: radial-gradient(ellipse at top, #171d3a 0%, var(--bg) 55%), var(--bg);
   color: var(--text);
   min-height: 100vh;
 }
@@ -43,7 +51,6 @@ body {
   gap: 1.25rem;
 }
 
-/* ---------- header ---------- */
 .app-header {
   display: flex;
   flex-wrap: wrap;
@@ -56,6 +63,7 @@ body {
   font-size: clamp(1.5rem, 3vw, 2.1rem);
   letter-spacing: 0.01em;
 }
+
 .subtitle {
   margin: 0.25rem 0 0;
   color: var(--text-dim);
@@ -63,7 +71,36 @@ body {
   max-width: 46ch;
 }
 
-/* ---------- buttons / inputs ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 860px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+  }
+}
+
+.app-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 0.85rem;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.app-footer code {
+  color: var(--accent-strong);
+}
+
+.toast {
+  min-height: 1.1em;
+  margin: 0.4rem 0 0;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
 .btn {
   background: var(--bg-panel-2);
   border: 1px solid var(--border);
@@ -74,20 +111,33 @@ body {
   font-size: 0.9rem;
   transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
 }
-.btn:hover { background: #1d234a; border-color: #37407a; }
-.btn:active { transform: translateY(1px); }
-.btn-icon { padding: 0.5rem 0.75rem; font-size: 1rem; line-height: 1; }
+.btn:hover {
+  background: #1d234a;
+  border-color: #37407a;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-icon {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .btn-accent {
   background: linear-gradient(135deg, var(--accent-strong), #f6d98a);
   color: #1a1200;
   border: none;
   font-weight: 600;
 }
-.btn-accent:hover { filter: brightness(1.05); }
+.btn-accent:hover {
+  filter: brightness(1.05);
+}
 
-input[type="number"],
-input[type="text"],
-input[type="month"] {
+input[type=number],
+input[type=text],
+input[type=month] {
   background: var(--bg-panel-2);
   border: 1px solid var(--border);
   color: var(--text);
@@ -96,7 +146,6 @@ input[type="month"] {
   font-size: 0.9rem;
 }
 
-/* ---------- controls ---------- */
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -107,7 +156,14 @@ input[type="month"] {
   border-radius: var(--radius);
   padding: 0.85rem 1rem;
 }
-.control-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .location-group label {
   display: flex;
   align-items: center;
@@ -115,38 +171,30 @@ input[type="month"] {
   font-size: 0.8rem;
   color: var(--text-dim);
 }
-.location-group input[type="number"] { width: 6.5rem; }
-.location-group input[type="text"] { width: 10rem; }
-
-/* ---------- layout ---------- */
-.layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+.location-group input[type=number] {
+  width: 6.5rem;
 }
-@media (min-width: 860px) {
-  .layout { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
+.location-group input[type=text] {
+  width: 10rem;
 }
 
-/* ---------- calendar ---------- */
 .calendar-wrap {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
   padding: 1rem;
-  box-shadow: var(--shadow);
 }
+
 .month-title {
   margin: 0 0 0.15rem;
   text-align: center;
   font-size: clamp(1.1rem, 2.2vw, 1.4rem);
 }
+
 .month-subtitle {
   margin: 0 0 0.75rem;
   text-align: center;
   color: var(--text-dim);
   font-size: 0.85rem;
 }
+
 .weekday-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -155,13 +203,15 @@ input[type="month"] {
   font-size: 0.8rem;
   margin-bottom: 0.35rem;
 }
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 4px;
 }
+
 .day-cell {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1/1;
   min-width: 0;
   min-height: 0;
   display: flex;
@@ -179,17 +229,32 @@ input[type="month"] {
   overflow: hidden;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-.day-cell:hover { border-color: var(--accent-strong); }
-.day-cell.outside { opacity: 0.35; }
-.day-cell.today { box-shadow: inset 0 0 0 2px var(--today-ring); }
-.day-cell.selected { background: #23295a; border-color: var(--accent-strong); }
+.day-cell:hover {
+  border-color: var(--accent-strong);
+}
+.day-cell.outside {
+  opacity: 0.35;
+}
+.day-cell.today {
+  box-shadow: inset 0 0 0 2px var(--today-ring);
+}
+.day-cell.selected {
+  background: #23295a;
+  border-color: var(--accent-strong);
+}
 .day-cell canvas {
   display: block;
   width: min(22px, 32%);
   height: min(22px, 32%);
   flex-shrink: 0;
 }
-.day-num { line-height: 1; font-weight: 600; flex-shrink: 0; }
+
+.day-num {
+  line-height: 1;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
 .day-greg {
   font-size: 0.6rem;
   color: var(--text-dim);
@@ -197,27 +262,45 @@ input[type="month"] {
   flex-shrink: 0;
   white-space: nowrap;
 }
-.day-cell.outside .day-greg { color: var(--text-dim); }
-
+.day-cell.outside .day-greg {
+  color: var(--text-dim);
+}
 @media (max-width: 560px) {
-  .day-greg { font-size: 0.52rem; }
+  .day-greg {
+    font-size: 0.52rem;
+  }
 }
 
-/* ---------- detail panel ---------- */
+@media (max-width: 480px) {
+  .day-num {
+    font-size: 0.7rem;
+  }
+  .control-group {
+    justify-content: center;
+    width: 100%;
+  }
+  .location-group input[type=text] {
+    width: 100%;
+  }
+}
 .detail-panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
   padding: 1.25rem;
-  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 0.5rem;
 }
-.detail-moon canvas { display: block; margin: 0 auto 0.25rem; }
-.detail-panel h3 { margin: 0; font-size: 1.1rem; }
+.detail-panel h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.detail-moon canvas {
+  display: block;
+  margin: 0 auto 0.25rem;
+}
+
 .detail-list {
   width: 100%;
   margin: 0.5rem 0 0;
@@ -226,30 +309,23 @@ input[type="month"] {
   row-gap: 0.5rem;
   text-align: left;
 }
-.detail-list div { display: contents; }
-.detail-list dt { color: var(--text-dim); font-size: 0.78rem; grid-column: 1; }
-.detail-list dd { margin: 0; font-size: 0.85rem; grid-column: 2; text-align: right; }
-.detail-location { color: var(--text-dim); font-size: 0.78rem; margin: 0.5rem 0 0; }
-
-/* ---------- footer ---------- */
-.app-footer {
-  border-top: 1px solid var(--border);
-  padding-top: 0.85rem;
+.detail-list div {
+  display: contents;
+}
+.detail-list dt {
   color: var(--text-dim);
   font-size: 0.78rem;
-  line-height: 1.5;
+  grid-column: 1;
 }
-.app-footer code { color: var(--accent-strong); }
-.toast {
-  min-height: 1.1em;
-  margin: 0.4rem 0 0;
-  color: var(--accent-strong);
-  font-weight: 600;
+.detail-list dd {
+  margin: 0;
+  font-size: 0.85rem;
+  grid-column: 2;
+  text-align: right;
 }
 
-/* ---------- small screens ---------- */
-@media (max-width: 480px) {
-  .day-num { font-size: 0.7rem; }
-  .control-group { justify-content: center; width: 100%; }
-  .location-group input[type="text"] { width: 100%; }
+.detail-location {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  margin: 0.5rem 0 0;
 }

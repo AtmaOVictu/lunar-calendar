@@ -35,14 +35,33 @@ This is not a Gregorian calendar with moon icons pasted on it. The grid's "month
 | File | What it does |
 |---|---|
 | `index.html` | Page structure/markup only. |
-| `css/styles.css` | All styling: CSS custom properties, Grid layout, `clamp()` fluid type, media queries for RWD. |
+| `scss/` | Sass source for all styling — variables, partials, nesting, mixins, placeholders (see "Sass" below). |
+| `css/styles.css` | Compiled from `scss/`, and what `index.html` actually links. Custom properties, Grid layout, `clamp()` fluid type, media queries for RWD. |
 | `js/moon.js` | The astronomy: Sun/Moon position, phase, illumination, zodiac sign, moonrise/moonset. Pure functions, no DOM code. Formulas and sources are documented at the top of the file (Paul Schlyter's public-domain low-precision algorithms, plus Meeus for the rise/set threshold altitude). |
 | `js/moondraw.js` | Draws a moon-phase disc on a `<canvas>` from an illumination fraction — the geometry (terminator ellipse) is explained in comments. |
 | `js/calendar.js` | Builds the month grid DOM from a state object. No global state of its own. |
 | `js/share.js` | Encodes/decodes view state to/from the URL query string; Web Share API + clipboard fallback. |
 | `js/app.js` | Entry point — owns state, wires up all the event listeners, calls the modules above. |
 
-No build tools, no npm install needed to run it — that's deliberate, so the examiner can just open the file or the GitHub Pages URL.
+No build tools, no npm install needed to run it — that's deliberate, so the examiner can just open the file or the GitHub Pages URL. The compiled `css/styles.css` is committed, so this holds even though the styles are authored in Sass.
+
+## Sass
+
+The stylesheet is authored in Sass (`scss/`), organized the way the course taught it — `settings/` (variables), `tools/` (mixins/functions), `generic/` (reset), `elements/` (component partials), all pulled together by `main.scss`:
+
+- **Variables & partials** — `settings/_colors.scss`, `settings/_variables.scss`, one file per UI area, `@import`ed from `main.scss`.
+- **Nesting** — `&:hover`, `&.selected`, media queries nested inside the selector they affect.
+- **Mixins + `@content`** — `respond-min($width)` / `respond-max($width)` in `tools/_mixins.scss` wrap a breakpoint so each call site supplies its own overrides.
+- **Placeholders + `@extend`** — `%panel` in `elements/_placeholders.scss` holds the shared card look for `.calendar-wrap` and `.detail-panel`.
+- **Maps + `@each`** — `$input-widths` in `settings/_variables.scss` drives the per-`input[type]` width rules in `elements/_controls.scss`.
+- **Functions** — `spacing($multiplier)` in `tools/_mixins.scss` returns a value on the project's 4px grid.
+- **Interpolation** — the color/radius/shadow Sass variables are written into a `:root { --x: #{$x}; }` block in `main.scss`, so the design tokens are both Sass-time variables and runtime CSS custom properties.
+
+To recompile after editing `.scss` files (needs [Dart Sass](https://sass-lang.com/dart-sass/) — `npm install -g sass`, or `npx sass`):
+
+```bash
+sass --style=expanded --no-source-map scss/main.scss css/styles.css
+```
 
 ## Accuracy note
 

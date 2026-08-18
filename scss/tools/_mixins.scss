@@ -1,0 +1,18 @@
+// Breakpoint helpers — @content lets each call site define its own overrides
+// instead of the mixin guessing which properties change.
+@mixin respond-min($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin respond-max($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+// Spacing on the project's 4px grid, e.g. spacing(3) == 12px.
+@function spacing($multiplier) {
+  @return $spacing-unit * $multiplier;
+}

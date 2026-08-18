@@ -1,0 +1,16 @@
+$radius: 14px;
+$radius-sm: 8px;
+$shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+$spacing-unit: 4px;
+
+// Mobile-first breakpoints, used through the respond-min mixin (tools/_mixins.scss).
+$bp-tablet: 860px;
+$bp-mobile: 560px;
+$bp-small: 480px;
+
+// input[type] -> width, looped with @each in elements/_controls.scss instead
+// of repeating a selector per type.
+$input-widths: (
+  number: 6.5rem,
+  text: 10rem
+);

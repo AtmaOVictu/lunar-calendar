@@ -1,0 +1,8 @@
+// Shared "card" look for the calendar and the detail panel — extended instead
+// of repeating background/border/radius/shadow in both places.
+%panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}

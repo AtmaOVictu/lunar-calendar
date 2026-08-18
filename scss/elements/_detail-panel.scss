@@ -1,0 +1,28 @@
+.detail-panel {
+  @extend %panel;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+
+  h3 { margin: 0; font-size: 1.1rem; }
+}
+
+.detail-moon canvas { display: block; margin: 0 auto 0.25rem; }
+
+.detail-list {
+  width: 100%;
+  margin: 0.5rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 0.5rem;
+  text-align: left;
+
+  div { display: contents; }
+  dt { color: var(--text-dim); font-size: 0.78rem; grid-column: 1; }
+  dd { margin: 0; font-size: 0.85rem; grid-column: 2; text-align: right; }
+}
+
+.detail-location { color: var(--text-dim); font-size: 0.78rem; margin: 0.5rem 0 0; }

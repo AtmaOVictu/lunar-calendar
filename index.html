@@ -7,6 +7,13 @@
 <meta name="description" content="An interactive lunar calendar: moon phase, illumination, zodiac sign and moonrise/moonset for any date and location." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23161a2b%22/><circle cx=%2265%22 cy=%2245%22 r=%2233%22 fill=%22%23f4ecd8%22/></svg>" />
 <link rel="stylesheet" href="css/styles.css" />
+<script>
+  // Applied before first paint so switching themes doesn't flash the old
+  // one on reload — kept inline/synchronous in <head> for exactly that reason.
+  if (localStorage.getItem('lunar-theme') === 'qabbalah') {
+    document.documentElement.setAttribute('data-theme', 'qabbalah');
+  }
+</script>
 </head>
 <body>
 <div class="app">
@@ -17,6 +24,7 @@
       <p class="subtitle">Moon phase, illumination, zodiac sign and moonrise/moonset — for any day, any place.</p>
     </div>
     <div class="header-actions">
+      <button id="themeBtn" class="btn" type="button" aria-pressed="false">◐ Classic</button>
       <button id="shareBtn" class="btn btn-accent" type="button">Share this view</button>
     </div>
   </header>

@@ -1,11 +1,32 @@
-// Design tokens (Sass variables). Compiled into CSS custom properties in
-// main.scss, so the palette stays inspectable/swappable at runtime too.
-$bg: #0b0e1a;
-$bg-panel: #12162a;
-$bg-panel-2: #171c33;
-$border: #262c4a;
-$text: #eef0fb;
-$text-dim: #9aa0c3;
-$accent: #f4ecd8;
-$accent-strong: #e8c766;
-$today-ring: #6ea8fe;
+// Two palettes as identically-keyed Sass maps, so main.scss can @each over
+// either one and emit the same set of CSS custom properties for both —
+// :root gets $classic-theme, [data-theme="qabbalah"] overrides with the
+// other. Add a key here (in both maps) and it's themeable everywhere the
+// matching --custom-property is already used.
+$classic-theme: (
+  bg: #0b0e1a,
+  bg-gradient-top: #171d3a,
+  bg-panel: #12162a,
+  bg-panel-2: #171c33,
+  border: #262c4a,
+  text: #eef0fb,
+  text-dim: #9aa0c3,
+  accent: #f4ecd8,
+  accent-strong: #e8c766,
+  today-ring: #6ea8fe,
+  selected-bg: #23295a
+);
+
+$qabbalah-theme: (
+  bg: #0a0f09,
+  bg-gradient-top: #22281a,
+  bg-panel: #10160f,
+  bg-panel-2: #151d13,
+  border: #33402b,
+  text: #f0ecdd,
+  text-dim: #a9b89e,
+  accent: #f0ecdd,
+  accent-strong: #c9a13b,
+  today-ring: #6a8f5c,
+  selected-bg: #2c3a1e
+);

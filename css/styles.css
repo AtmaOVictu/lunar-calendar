@@ -12,6 +12,7 @@
 
 :root {
   --bg: #0b0e1a;
+  --bg-gradient-top: #171d3a;
   --bg-panel: #12162a;
   --bg-panel-2: #171c33;
   --border: #262c4a;
@@ -20,10 +21,25 @@
   --accent: #f4ecd8;
   --accent-strong: #e8c766;
   --today-ring: #6ea8fe;
+  --selected-bg: #23295a;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+[data-theme=qabbalah] {
+  --bg: #0a0f09;
+  --bg-gradient-top: #22281a;
+  --bg-panel: #10160f;
+  --bg-panel-2: #151d13;
+  --border: #33402b;
+  --text: #f0ecdd;
+  --text-dim: #a9b89e;
+  --accent: #f0ecdd;
+  --accent-strong: #c9a13b;
+  --today-ring: #6a8f5c;
+  --selected-bg: #2c3a1e;
 }
 
 * {
@@ -37,7 +53,7 @@ html {
 body {
   margin: 0;
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
-  background: radial-gradient(ellipse at top, #171d3a 0%, var(--bg) 55%), var(--bg);
+  background: radial-gradient(ellipse at top, var(--bg-gradient-top) 0%, var(--bg) 55%), var(--bg);
   color: var(--text);
   min-height: 100vh;
 }
@@ -239,7 +255,7 @@ input[type=month] {
   box-shadow: inset 0 0 0 2px var(--today-ring);
 }
 .day-cell.selected {
-  background: #23295a;
+  background: var(--selected-bg);
   border-color: var(--accent-strong);
 }
 .day-cell canvas {

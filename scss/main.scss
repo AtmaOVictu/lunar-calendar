@@ -8,20 +8,23 @@
 @import "tools/mixins";
 @import "elements/placeholders";
 
+// Classic is the default look; [data-theme="qabbalah"] on <html> overrides
+// every color custom property below it via the cascade. Toggled + persisted
+// in js/app.js, applied pre-paint by the inline script in index.html.
 :root {
-  --bg: #{$bg};
-  --bg-panel: #{$bg-panel};
-  --bg-panel-2: #{$bg-panel-2};
-  --border: #{$border};
-  --text: #{$text};
-  --text-dim: #{$text-dim};
-  --accent: #{$accent};
-  --accent-strong: #{$accent-strong};
-  --today-ring: #{$today-ring};
+  @each $key, $value in $classic-theme {
+    --#{$key}: #{$value};
+  }
   --radius: #{$radius};
   --radius-sm: #{$radius-sm};
   --shadow: #{$shadow};
   --gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+[data-theme="qabbalah"] {
+  @each $key, $value in $qabbalah-theme {
+    --#{$key}: #{$value};
+  }
 }
 
 @import "generic/reset";

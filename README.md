@@ -28,7 +28,8 @@ This is not a Gregorian calendar with moon icons pasted on it. The grid's "month
 - Jump to any date directly, or "Today" to return to the lunation containing today.
 - Location input (latitude/longitude/name) or "Use my location" via the Geolocation API — moonrise/moonset recompute for wherever you are.
 - **Share this view**: builds a URL that encodes the selected date and location (`?y=&m=&d=&lat=&lon=&loc=`), uses the Web Share API on supported devices or copies the link to the clipboard otherwise. Opening a shared link reproduces the exact same view and re-derives the correct lunation from it — this is how the examiner (or anyone) can be sent a specific date/place without you being present.
-- Fully responsive (mobile phone through desktop), dark theme.
+- **Theme toggle**: "Classic" (cool navy) and "Qabbalah" (warm olive/gold) — every themeable color is a CSS custom property, so the toggle just flips a `data-theme` attribute on `<html>`. The choice is saved to `localStorage` and applied by a small inline script in `<head>` before first paint, so reloading never flashes the other theme.
+- Fully responsive (mobile phone through desktop).
 
 ## How it works / where to look
 
@@ -53,9 +54,9 @@ The stylesheet is authored in Sass (`scss/`), organized the way the course taugh
 - **Nesting** — `&:hover`, `&.selected`, media queries nested inside the selector they affect.
 - **Mixins + `@content`** — `respond-min($width)` / `respond-max($width)` in `tools/_mixins.scss` wrap a breakpoint so each call site supplies its own overrides.
 - **Placeholders + `@extend`** — `%panel` in `elements/_placeholders.scss` holds the shared card look for `.calendar-wrap` and `.detail-panel`.
-- **Maps + `@each`** — `$input-widths` in `settings/_variables.scss` drives the per-`input[type]` width rules in `elements/_controls.scss`.
+- **Maps + `@each`** — `$classic-theme` / `$qabbalah-theme` in `settings/_colors.scss` are identically-keyed color maps; `main.scss` `@each`es over one into `:root` and the other into `[data-theme="qabbalah"]`, so both themes come from the same loop. `$input-widths` in `settings/_variables.scss` does the same for the per-`input[type]` width rules in `elements/_controls.scss`.
 - **Functions** — `spacing($multiplier)` in `tools/_mixins.scss` returns a value on the project's 4px grid.
-- **Interpolation** — the color/radius/shadow Sass variables are written into a `:root { --x: #{$x}; }` block in `main.scss`, so the design tokens are both Sass-time variables and runtime CSS custom properties.
+- **Interpolation** — Sass variables/map values are written into CSS custom properties (`--#{$key}: #{$value};`) in `main.scss`, so the design tokens are both Sass-time values and runtime-swappable CSS custom properties — which is what makes the theme toggle (see "Other features") a pure attribute flip with no recompiling.
 
 To recompile after editing `.scss` files (needs [Dart Sass](https://sass-lang.com/dart-sass/) — `npm install -g sass`, or `npx sass`):
 

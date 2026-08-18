@@ -24,6 +24,7 @@
     locName: document.getElementById('locName'),
     geoBtn: document.getElementById('geoBtn'),
     shareBtn: document.getElementById('shareBtn'),
+    themeBtn: document.getElementById('themeBtn'),
     toast: document.getElementById('toast'),
     detailCanvas: document.getElementById('detailCanvas'),
     detailDate: document.getElementById('detailDate'),
@@ -53,6 +54,33 @@
   els.latInput.value = state.lat;
   els.lonInput.value = state.lon;
   els.locName.value = state.locName;
+
+  // Theme: a display preference, not part of the shareable view state, so
+  // it lives in localStorage rather than the URL (see js/share.js). The
+  // actual attribute is applied pre-paint by the inline script in
+  // index.html's <head> — this just keeps the button label in sync and
+  // handles switching it after load.
+  const THEME_KEY = 'lunar-theme';
+  let theme = document.documentElement.getAttribute('data-theme') === 'qabbalah' ? 'qabbalah' : 'classic';
+
+  function applyTheme(next) {
+    theme = next;
+    if (theme === 'qabbalah') {
+      document.documentElement.setAttribute('data-theme', 'qabbalah');
+      els.themeBtn.textContent = '☯ Qabbalah';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      els.themeBtn.textContent = '◐ Classic';
+    }
+    els.themeBtn.setAttribute('aria-pressed', String(theme === 'qabbalah'));
+  }
+  applyTheme(theme);
+
+  els.themeBtn.addEventListener('click', () => {
+    const next = theme === 'qabbalah' ? 'classic' : 'qabbalah';
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+  });
 
   function showToast(msg) {
     els.toast.textContent = msg;

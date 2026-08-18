@@ -4,13 +4,9 @@ A workable, interactive lunar calendar built in plain **HTML, CSS and vanilla ES
 
 ## Live demo
 
-Once deployed to GitHub Pages (steps below), the working site is at:
+**[atmaovictu.github.io/lunar-calendar](https://atmaovictu.github.io/lunar-calendar/)**
 
-```
-https://<your-github-username>.github.io/<repo-name>/
-```
-
-Until then, open `index.html` directly in any browser — it's fully static, no server required.
+Or open `index.html` directly in any browser — it's fully static, no server required.
 
 ## What makes this an actual *lunar* calendar
 
@@ -29,6 +25,7 @@ This is not a Gregorian calendar with moon icons pasted on it. The grid's "month
 - Location input (latitude/longitude/name) or "Use my location" via the Geolocation API — moonrise/moonset recompute for wherever you are.
 - **Share this view**: builds a URL that encodes the selected date and location (`?y=&m=&d=&lat=&lon=&loc=`), uses the Web Share API on supported devices or copies the link to the clipboard otherwise. Opening a shared link reproduces the exact same view and re-derives the correct lunation from it — this is how the examiner (or anyone) can be sent a specific date/place without you being present.
 - **Theme toggle**: "Classic" (cool navy) and "Qabbalah" (warm olive/gold) — every themeable color is a CSS custom property, so the toggle just flips a `data-theme` attribute on `<html>`. The choice is saved to `localStorage` and applied by a small inline script in `<head>` before first paint, so reloading never flashes the other theme.
+- **Zodiac lore**: the detail panel draws a simplified constellation stick-figure for whichever sign the Moon is in that day, plus its traditional element/modality/classical ruling planet and a one-line trait descriptor — framed as documented lore about the sign itself, not a personal prediction. See "Zodiac lore" below for sourcing.
 - Fully responsive (mobile phone through desktop).
 
 ## How it works / where to look
@@ -40,6 +37,7 @@ This is not a Gregorian calendar with moon icons pasted on it. The grid's "month
 | `css/styles.css` | Compiled from `scss/`, and what `index.html` actually links. Custom properties, Grid layout, `clamp()` fluid type, media queries for RWD. |
 | `js/moon.js` | The astronomy: Sun/Moon position, phase, illumination, zodiac sign, moonrise/moonset. Pure functions, no DOM code. Formulas and sources are documented at the top of the file (Paul Schlyter's public-domain low-precision algorithms, plus Meeus for the rise/set threshold altitude). |
 | `js/moondraw.js` | Draws a moon-phase disc on a `<canvas>` from an illumination fraction — the geometry (terminator ellipse) is explained in comments. |
+| `js/zodiac.js` | Per-sign traditional lore (element/modality/ruler/trait) and a simplified constellation stick-figure drawn on `<canvas>`. See "Zodiac lore" below. |
 | `js/calendar.js` | Builds the month grid DOM from a state object. No global state of its own. |
 | `js/share.js` | Encodes/decodes view state to/from the URL query string; Web Share API + clipboard fallback. |
 | `js/app.js` | Entry point — owns state, wires up all the event listeners, calls the modules above. |
@@ -63,6 +61,16 @@ To recompile after editing `.scss` files (needs [Dart Sass](https://sass-lang.co
 ```bash
 sass --style=expanded --no-source-map scss/main.scss css/styles.css
 ```
+
+## Zodiac lore
+
+The detail panel's constellation + lore block (`js/zodiac.js`) is deliberately sourced, not invented:
+
+- **Element (Fire/Earth/Air/Water)** and **modality (Cardinal/Fixed/Mutable)** are the standard Western tropical-zodiac triplicity/quadruplicity classifications — e.g. every astrology reference agrees Scorpio is a Water, Fixed sign.
+- **Ruling planet** uses the seven-classical-planet scheme only (Sun through Saturn, no Uranus/Neptune/Pluto) — deliberately consistent with the classical-era Schlyter/Meeus astronomy `js/moon.js` already uses for Sun/Moon position, rather than mixing in modern discoveries.
+- **Constellation figures** are simplified "connect-the-dots" star patterns, in the tradition popularized by H.A. Rey's *The Stars: A New Way to See Them* (1952) — real, documented shapes (e.g. Sagittarius as the "Teapot" asterism, Scorpius's hooked tail), simplified rather than plotted from exact star-catalog coordinates, matching the same "honest simplification" spirit as the Accuracy Note below.
+- **Trait descriptors** are standard, widely-published one-line zodiac archetypes — folklore-level content, presented as tradition rather than prediction.
+- It shows the sign the **Moon** (not Sun) occupies that day — the same value already shown in the "Zodiac sign" row — so the panel never shows two different "zodiac signs" for one day.
 
 ## Accuracy note
 
@@ -102,4 +110,4 @@ Send that URL to the examiner, or use the app's own **"Share this view"** button
 
 ## License / attribution
 
-Astronomical algorithms adapted from public-domain sources (Paul Schlyter, "How to compute planetary positions"; Jean Meeus, *Astronomical Algorithms*). All code in this repository is original.
+Astronomical algorithms adapted from public-domain sources (Paul Schlyter, "How to compute planetary positions"; Jean Meeus, *Astronomical Algorithms*). Constellation figures follow the simplified stick-figure convention popularized by H.A. Rey's *The Stars: A New Way to See Them*; traditional zodiac element/modality/ruler classifications are standard Western astrology, not project-specific invention. All code in this repository is original.

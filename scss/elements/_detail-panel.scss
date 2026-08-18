@@ -26,3 +26,28 @@
 }
 
 .detail-location { color: var(--text-dim); font-size: 0.78rem; margin: 0.5rem 0 0; }
+
+.detail-constellation {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+
+  canvas { display: block; margin: 0 auto 0.35rem; }
+}
+
+.lore-heading { margin: 0; font-size: 0.95rem; }
+
+.lore-facts { margin: 0; font-size: 0.75rem; color: var(--text-dim); }
+
+.lore-trait {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-dim);
+  max-width: 34ch;
+}

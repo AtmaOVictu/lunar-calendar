@@ -37,6 +37,13 @@
     detailRise: document.getElementById('detailRise'),
     detailSet: document.getElementById('detailSet'),
     detailLocation: document.getElementById('detailLocation'),
+    constellationCanvas: document.getElementById('constellationCanvas'),
+    loreGlyph: document.getElementById('loreGlyph'),
+    loreSign: document.getElementById('loreSign'),
+    loreElement: document.getElementById('loreElement'),
+    loreModality: document.getElementById('loreModality'),
+    loreRuler: document.getElementById('loreRuler'),
+    loreTrait: document.getElementById('loreTrait'),
   };
 
   const today = new Date();
@@ -80,6 +87,12 @@
     const next = theme === 'qabbalah' ? 'classic' : 'qabbalah';
     localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
+    // Not called from inside applyTheme() itself: applyTheme(theme) runs
+    // once immediately above, before `currentBounds` (declared further
+    // down) exists — renderDetail() reads it, so calling it that early
+    // would throw. Safe here: by the time a click can happen, the
+    // trailing renderAll() has already run once.
+    renderDetail();
   });
 
   function showToast(msg) {
@@ -127,6 +140,18 @@
     els.detailAge.textContent = `${data.ageDays.toFixed(1)} / ${window.MoonCalc.SYNODIC_MONTH.toFixed(1)} days`;
     els.detailZodiac.textContent = data.zodiac;
     els.detailDistance.textContent = `${Math.round(data.distanceKm).toLocaleString()} km`;
+
+    const lore = window.ZodiacLore.getInfo(data.zodiac);
+    els.loreGlyph.textContent = lore.glyph;
+    els.loreSign.textContent = data.zodiac;
+    els.loreElement.textContent = lore.element;
+    els.loreModality.textContent = lore.modality;
+    els.loreRuler.textContent = lore.ruler;
+    els.loreTrait.textContent = `Traditionally: ${lore.trait}.`;
+    const constellationOpts = theme === 'qabbalah'
+      ? { star: '#f0ecdd', line: 'rgba(201, 161, 59, 0.6)' }
+      : { star: '#eef0fb', line: 'rgba(232, 199, 102, 0.6)' };
+    window.drawConstellation(els.constellationCanvas, data.zodiac, constellationOpts);
 
     const timeFmt = (t) => (t ? t.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '—');
     els.detailRise.textContent = riseSet.alwaysDown ? 'does not rise' : timeFmt(riseSet.rise);
